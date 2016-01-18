@@ -1,0 +1,13 @@
+{
+  "name": "small-proxy-server",
+  "version": "0.0.1",
+  "main": "index.html",
+  "dependencies": {
+    "http-proxy": "^1.12.0"
+  },
+  "window" : {
+    //"toolbar" : false,
+    "width" : 500,
+    "height" : 600
+  }
+}

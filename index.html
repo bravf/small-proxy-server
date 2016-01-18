@@ -1,0 +1,91 @@
+<script>
+//这段脚本解决copy,paste https://github.com/nwjs/nw.js/issues/1955
+var gui = require('nw.gui')
+win = gui.Window.get()
+var nativeMenuBar = new gui.Menu({ type: "menubar" })
+
+try {
+    nativeMenuBar.createMacBuiltin("My App")
+    win.menu = nativeMenuBar
+} catch (ex) {
+    console.log(ex.message)
+}
+</script>
+
+<!-- 渲染 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="bootstrap.css" rel="stylesheet"/>
+    <link href="index.css" rel="stylesheet"/>
+    <title>small-proxy-server</title>
+    <script src="jquery.js"></script>
+</head>
+    <body>
+
+    <div class="head">
+        <div>
+            <button class="js-add-btn btn btn-primary">添加</button>
+            <button class="js-save-btn btn btn-primary">保存</button>
+        </div>
+        <div class="logs"></div>
+    </div>
+
+    <div class="urls">
+    </div>
+
+    <script>
+    var main = require('./main')
+    main.run()
+
+    function renderOne(url, urlInfo){
+        $('.urls').prepend(`
+                <div class="url" id="${url}">
+                    <div><input class="form-control" type="text" value="${url}" onblur="save(this, '${url}')"></div>
+                    <div><textarea class="form-control" onblur="save(this, '${url}')">${urlInfo.data}</textarea></div>
+                </div>
+        `)
+    }
+
+    function focus2(el){console.log(el)
+        $(el).parent().parent().find('textarea').show()
+    }
+    function blur(el){
+        $(el).hide()
+    }
+
+    function save(el, url1){
+        var $parent = $(el).parent().parent()
+        var url2 = $parent.find('input').val().trim()
+        var urlData = $parent.find('textarea').val().trim()
+
+        if (url2 == ''){
+            $parent.remove()
+        }
+
+        main.saveData(url1, url2, urlData)
+    }
+
+    //! 初始渲染列表
+    void function (){
+        var urlMapping = main.getUrlMapping()
+
+        for(var url in urlMapping){
+            var urlInfo = urlMapping[url]
+
+            renderOne(url, urlInfo)
+        }
+    }()
+
+    //! 新增
+    void function (){
+        $('.js-add-btn').on('click', function (){
+            renderOne('', {data:''})
+        })
+    }()
+
+    </script>
+
+    </body>
+</html>

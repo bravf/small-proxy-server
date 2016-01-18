@@ -1,0 +1,9 @@
+{
+    "urlMapping" : {
+        "/hehe" : {
+            "type" : "get",
+            "dataType" : "json",
+            "data" : "{\"hello\":\"world\"}"
+        }
+    }
+}
