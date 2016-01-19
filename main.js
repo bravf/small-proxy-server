@@ -6,11 +6,13 @@ var $ = require('./jquery')
 var urlMod = require('url')
 
 function print(s){
+    //console.log(s+'\n');return;
+
     var $logs = $('.logs')
     if ($logs[0].scrollHeight > 1000){
         $logs.html('')
     }
-    $('.logs').append(s+'<br>')[0].scrollTop = 2000
+    $('.logs').append(s+'<br><br>')[0].scrollTop = 2000
 }
 
 print('logs...')
@@ -58,14 +60,17 @@ var Main = function (){
 
     var server = http.createServer(function (req, res){
         var reqUrl = req.url
-        var reqPath = urlMod.parse(reqUrl).pathname
+        var reqObj = urlMod.parse(reqUrl)
+        var reqHref = reqObj.href
+
+        print(JSON.stringify(urlMod.parse(reqUrl)))
 
         res.setHeader('X-Proxy-Header', 'small-proxy-server')
 
         //如果配置了mock
-        if (reqPath in urlMapping){
-            print(`<b style="color:#4cae4c">${reqUrl}</b>`)
-            var customRes = urlMapping[reqPath]
+        if (reqHref in urlMapping){
+            print('<b style="color:#4cae4c">' + reqUrl + '</b>')
+            var customRes = urlMapping[reqHref]
             res.statusCode = 200
             res.setHeader('Content-Type', 'application/json')
             res.write(customRes.data)
@@ -73,8 +78,9 @@ var Main = function (){
         }
         else {
             print(reqUrl)
+            print(reqObj.protocol + '//' + reqObj.host)
             proxy.web(req, res, {
-                target : 'http://127.0.0.1:80'
+                target : reqObj.protocol + '//' + reqObj.host
             })
         }
     })
@@ -88,7 +94,6 @@ var Main = function (){
 }()
 
 //Main.run()
-
 module.exports = $.extend(DataOP, Main)
 
 
