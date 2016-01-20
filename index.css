@@ -6,23 +6,24 @@ body{
   margin: 10px;
 }
 
-.head{
-    position: fixed;
-    top: 5px;
-    width: 96%;
-    background: #fff;
+.nav-contents{
+    margin-top: 10px;
+}
+
+.nav-content{
+    display: none;
+}
+.nav-content:first-child{
+    display: block;
 }
 
 .urls{
     margin: 10px 0;
-    margin-top: 160px;
 }
+
 
 .url{
     margin: 10px 0;
-}
-
-.url{
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 5px;
@@ -45,7 +46,7 @@ body{
 .logs{
     border: 1px solid #f2dede;
     border-radius: 4px;
-    height: 100px;
+    height: 500px;
     overflow-y: scroll;
     margin-top: 10px;
     padding: 5px;

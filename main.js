@@ -12,10 +12,11 @@ function print(s){
     if ($logs[0].scrollHeight > 1000){
         $logs.html('')
     }
-    $('.logs').append(s+'<br><br>')[0].scrollTop = 2000
+    $('.logs').append(s+'<br>')[0].scrollTop = 2000
 }
 
-print('logs...')
+print('begin listen 127.0.0.1:8989')
+print('....................................................................................')
 
 //! 数据操作
 var DataOP = function (){
@@ -61,16 +62,14 @@ var Main = function (){
     var server = http.createServer(function (req, res){
         var reqUrl = req.url
         var reqObj = urlMod.parse(reqUrl)
-        var reqHref = reqObj.href
-
-        print(JSON.stringify(urlMod.parse(reqUrl)))
+        var path = reqObj.pathname
 
         res.setHeader('X-Proxy-Header', 'small-proxy-server')
 
         //如果配置了mock
-        if (reqHref in urlMapping){
+        if (path in urlMapping){
             print('<b style="color:#4cae4c">' + reqUrl + '</b>')
-            var customRes = urlMapping[reqHref]
+            var customRes = urlMapping[path]
             res.statusCode = 200
             res.setHeader('Content-Type', 'application/json')
             res.write(customRes.data)
@@ -78,16 +77,15 @@ var Main = function (){
         }
         else {
             print(reqUrl)
-            print(reqObj.protocol + '//' + reqObj.host)
             proxy.web(req, res, {
-                target : reqObj.protocol + '//' + reqObj.host
+                target : 'http://127.0.0.1'
             })
         }
     })
 
     return {
         run : function (){
-            server.listen(8080)
+            server.listen(8989)
         }
     }
 

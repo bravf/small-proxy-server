@@ -1,1 +1,1 @@
-{"urlMapping":{"/test":{"data":"{\"code\":\"0\", \"msg\":\"hello,world\"}"}}}
+{"urlMapping":{"/test":{"data":"{\"code\":\"0\", \"msg\":\"hello,world\"}"},"/test/test.action":{"data":"{\"code\":0, \"msg\":\"嘿嘿嘿\"}"}}}

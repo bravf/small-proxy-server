@@ -24,16 +24,28 @@ try {
 </head>
     <body>
 
-    <div class="head">
-        <div>
-            <button class="js-add-btn btn btn-primary">添加</button>
-            <button class="js-save-btn btn btn-primary">保存</button>
-        </div>
-        <div class="logs"></div>
-    </div>
+    <div class="body">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="#">规则</a></li>
+            <li role="presentation"><a href="#">日志</a></li>
+        </ul>
 
-    <div class="urls">
-    </div>
+        <div class="nav-contents">
+            <div class="nav-content">
+                <button class="js-add-btn btn btn-primary">添加</button>
+                <button class="js-save-btn btn btn-primary">保存</button>
+
+                <div class="urls">
+                </div>
+            </div>
+
+            <div class="nav-content logs">
+                
+            </div>
+        </div>
+
+    </div>  
+
 
     <script>
     var main = require('./main')
@@ -66,6 +78,23 @@ try {
 
         main.saveData(url1, url2, urlData)
     }
+
+    //! tab switch
+    void function (){
+        var $tabs = $('.nav>li')
+        var $contents = $('.nav-content')
+
+        $tabs.each(function (idx){
+            var me = $(this)
+            me.on('click', function (){
+                $contents.hide()
+                $contents.eq(idx).show()
+
+                $tabs.removeClass('active')
+                $tabs.eq(idx).addClass('active')
+            })
+        })
+    }()
 
     //! 初始渲染列表
     void function (){
