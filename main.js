@@ -6,7 +6,7 @@ var $ = require('./jquery')
 var urlMod = require('url')
 
 function print(s){
-    //console.log(s+'\n');return;
+    console.log(s+'\n');return;
 
     var $logs = $('.logs')
     if ($logs[0].scrollHeight > 1000){
@@ -87,14 +87,14 @@ var Main = function (){
 
     return {
         run : function (){
-            server.listen(8080)
+            server.listen(8989)
         }
     }
 
 }()
 
-//Main.run()
-module.exports = $.extend(DataOP, Main)
+Main.run()
+//module.exports = $.extend(DataOP, Main)
 
 
 
